@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../sharedComponent/shared/header';
-import Footer from '../../sharedComponent/shared/footer';
+import Header from '../../sharedComponent/shared/Header/header';
+import Footer from '../../sharedComponent/shared/Footer/footer';
 import PokeSearch from '../component/pokesearch';
 
 const RemoteButton = React.lazy(() => import('remote/Button'));
