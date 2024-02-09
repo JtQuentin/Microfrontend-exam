@@ -1,5 +1,5 @@
-import Footer from '../../sharedComponent/shared/footer';
-import Header from '../../sharedComponent/shared/header';
+import Header from '../../sharedComponent/shared/Header/header';
+import Footer from '../../sharedComponent/shared/Footer/footer';
 import LocalButton from './Button';
 import Card from '../component/card';
 

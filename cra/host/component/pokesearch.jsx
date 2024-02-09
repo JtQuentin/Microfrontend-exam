@@ -1,43 +1,54 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const PokeSearch = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [pokemonData, setPokemonData] = useState(null);
-  const [error, setError] = useState(null);
+class PokeSearch extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: '',
+      pokemonData: null,
+      error: null,
+      isLoading: false,
+    };
+  }
 
-  const handleSearch = async () => {
+  handleSearch = async () => {
+    this.setState({ isLoading: true });
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm}`);
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.searchTerm}`);
       if (!response.ok) {
         throw new Error('Pokemon not found');
       }
       const data = await response.json();
-      setPokemonData(data);
-      setError(null);
+      this.setState({ pokemonData: data, error: null });
     } catch (error) {
-      setPokemonData(null);
-      setError(error.message);
+      this.setState({ pokemonData: null, error: error.message });
     }
+    this.setState({ isLoading: false });
   };
 
-  return (
-    <div>
-      <h1>Pokemon Search</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-      {error && <p>{error}</p>}
-      {pokemonData && (
-        <div>
-          <h2>{pokemonData.name}</h2>
-          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
-        </div>
-      )}
-    </div>
-  );
-};
+  render() {
+    const { searchTerm, pokemonData, error, isLoading } = this.state;
+    return (
+      <div>
+        <h1>Pokemon Search</h1>
+        <input
+          type="text"
+          value={searchTerm}
+          id="pokesearch"
+          onChange={(e) => this.setState({ searchTerm: e.target.value })}
+        />
+        <button onClick={this.handleSearch} disabled={isLoading}>Search</button>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {pokemonData && (
+          <div>
+            <h2>{pokemonData.name}</h2>
+            <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 export default PokeSearch;
