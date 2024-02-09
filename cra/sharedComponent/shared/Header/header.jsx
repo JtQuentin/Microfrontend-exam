@@ -1,8 +1,13 @@
 import React from 'react';
+import { Navbar, Container } from 'react-bootstrap';
 
-function Header() {
+function Header({ title }) {
   return (
-    <h1 style={{ color: 'red' }}>Hello, World!</h1>
+    <Navbar bg="dark" expand="lg">
+      <Container>
+        <Navbar.Brand href="" className="text-light">{title}</Navbar.Brand>
+      </Container>
+    </Navbar>
   );
 }
 
